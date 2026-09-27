@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ComicCraft AI</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        body{min-height:100vh;background:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000') no-repeat center/cover fixed;display:flex;justify-content:center;align-items:center;padding:20px;flex-direction:column}
+        .card{background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);padding:35px;border-radius:20px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+        .card h2{text-align:center;margin-bottom:20px}
+        label{font-size:13px;font-weight:700;color:#4a5568;margin:14px 0 6px;display:block}
+        input,textarea,select{width:100%;padding:12px;border-radius:10px;border:1.5px solid #cbd5e0;outline:none}
+        textarea{height:75px}
+        .btn{width:100%;margin-top:22px;padding:13px;background:linear-gradient(90deg,#667eea,#3b82f6);color:white;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
+        .result{max-width:900px;width:100%;margin:30px auto;background:white;border-radius:15px;padding:25px}
+        .panels{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .panel{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+        .panel img{width:100%;height:280px;object-fit:cover}
+        .panel-body{padding:12px}
+        .download{text-align:center;margin-top:20px}
+        .download a{display:inline-block;padding:12px 25px;background:#10b981;color:white;text-decoration:none;border-radius:10px;font-weight:700}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>✨ Create Your Comic</h2>
+        <form method="post" action="/">
+            <label>Story Idea / Prompt</label>
+            <textarea name="story" required placeholder="A brave red fox adventure..."></textarea>
+            <label>Main Character Name</label>
+            <input type="text" name="character" placeholder="Free">
+            <label>Setting</label>
+            <select name="setting"><option>Forest</option><option>Futuristic City</option><option>Space</option></select>
+            <label>Art Style</label>
+            <select name="art_style"><option>Comic Book Style</option><option>Realistic</option><option>Anime</option></select>
+            <button class="btn" type="submit">Generate Comic 🚀</button>
+        </form>
+    </div>
+
+    {% if panels %}
+    <div class="result">
+        <h2>📖 Your Comic Preview - 4 Panels</h2>
+        <div class="panels">
+            {% for p in panels %}
+            <div class="panel">
+                <img src="{{ p.image_url }}">
+                <div class="panel-body"><h4>Panel {{ loop.index }}: {{ p.title }}</h4><p>{{ p.text }}</p></div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="download"><a href="/download-pdf">📄 Download as REAL PDF</a></div>
+    </div>
+    {% endif %}
+</body>
+</html>
